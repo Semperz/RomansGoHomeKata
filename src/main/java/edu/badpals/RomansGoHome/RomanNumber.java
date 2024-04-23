@@ -1,9 +1,7 @@
 package edu.badpals.RomansGoHome;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 public class RomanNumber {
     private String romanNumber;
@@ -19,26 +17,22 @@ public class RomanNumber {
 
     public int toDecimal() {
         Matcher matcher = romanRegex.matcher(getRomanNumber());
-        if (!matcher.find()) {
-            return 0;
-        }
         int total = 0;
-        for (int i = 0; i < matcher.groupCount(); ++i) {
-            String currentGroup = matcher.group(i);
-            System.out.println(currentGroup);
-            int[] parsedData = currentGroup.chars().mapToObj(c -> (char) c).mapToInt(numeral -> RomanNumbers.valueOf(Character.toString(numeral)).getDecimal()).toArray();
-            for (int j = 0; j < parsedData.length; ++j){
-                if (j + 1 >= parsedData.length) {
-                    total += parsedData[j];
-                    break;
-                }
-                if (parsedData[j] >= parsedData[j+1]){
-                    total += parsedData[j];
-                }else{
-                    total += parsedData[j+1] - parsedData[j++];
-                }
+        StringBuilder joinedGroups = new StringBuilder();
+        while (matcher.find()) {
+            joinedGroups.append(matcher.group());
+        }
+        int[] parsedData = joinedGroups.toString().chars().mapToObj(c -> (char) c).mapToInt(numeral -> RomanNumbers.valueOf(Character.toString(numeral)).getDecimal()).toArray();
+        for (int i = 0; i < parsedData.length; ++i){
+            if (i + 1 >= parsedData.length) {
+                total += parsedData[i];
+                break;
             }
-            System.out.println(Arrays.toString(parsedData));
+            if (parsedData[i] >= parsedData[i +1]){
+                total += parsedData[i];
+            }else{
+                total += parsedData[i +1] - parsedData[i++];
+            }
         }
 
         return total;
