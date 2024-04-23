@@ -18,7 +18,6 @@ public class RomanNumber {
     }
 
     public int toDecimal() {
-        // TODO: Implement this
         Matcher matcher = romanRegex.matcher(getRomanNumber());
         if (!matcher.find()) {
             return 0;
