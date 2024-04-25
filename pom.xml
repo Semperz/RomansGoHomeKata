@@ -21,7 +21,6 @@
         <!-- dependencies -->
         <jupiter.version>5.10.1</jupiter.version>
         <params.version>5.10.1</params.version>
-        <assertj.version>2.9.1</assertj.version>
         <!-- plugins -->
         <compiler.version>3.11.0</compiler.version>
         <deploy.version>3.1.1</deploy.version>
@@ -44,11 +43,6 @@
             <artifactId>junit-jupiter-params</artifactId>
             <version>${params.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>[${assertj.version},)</version>
         </dependency>
     </dependencies>
 
