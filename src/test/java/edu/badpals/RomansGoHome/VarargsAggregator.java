@@ -8,6 +8,7 @@ import org.junit.platform.commons.util.Preconditions;
 import java.lang.reflect.Array;
 import java.util.stream.IntStream;
 
+// Taken from: https://github.com/junit-team/junit5/issues/2256#issuecomment-612438057
 class VarargsAggregator implements ArgumentsAggregator {
 	@Override
 	public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException {
