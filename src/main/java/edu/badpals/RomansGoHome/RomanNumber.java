@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RomanNumber {
-    private String romanNumber;
-    private Pattern romanRegex = Pattern.compile(String.format("([%s]+)", String.join("", RomanNumbers.getNames()))); // TODO: Code this pattern
+    private final String romanNumber;
+    private final Pattern romanRegex = Pattern.compile(String.format("([%s]+)", String.join("", RomanNumbers.getNames()))); // TODO: Code this pattern
 
     public RomanNumber(String romanNumber) {
         this.romanNumber = romanNumber;
@@ -15,14 +15,22 @@ public class RomanNumber {
         return romanNumber;
     }
 
-    public int toDecimal() {
+    private int[] parseRomanStringToInts(String romanString) {
+        return romanString.chars().mapToObj(c -> (char) c).mapToInt(numeral -> RomanNumbers.valueOf(Character.toString(numeral)).getDecimal()).toArray();
+    }
+
+    private String getAllMatchingGroups() {
         Matcher matcher = romanRegex.matcher(getRomanNumber());
-        int total = 0;
         StringBuilder joinedGroups = new StringBuilder();
         while (matcher.find()) {
             joinedGroups.append(matcher.group());
         }
-        int[] parsedData = joinedGroups.toString().chars().mapToObj(c -> (char) c).mapToInt(numeral -> RomanNumbers.valueOf(Character.toString(numeral)).getDecimal()).toArray();
+        return joinedGroups.toString();
+    }
+
+    public int toDecimal() {
+        int[] parsedData = parseRomanStringToInts(getAllMatchingGroups());
+        int total = 0;
         for (int i = 0; i < parsedData.length; ++i){
             if (i + 1 >= parsedData.length) {
                 total += parsedData[i];
@@ -31,7 +39,7 @@ public class RomanNumber {
             if (parsedData[i] >= parsedData[i +1]){
                 total += parsedData[i];
             }else{
-                total += parsedData[i +1] - parsedData[i++];
+                total += parsedData[i + 1] - parsedData[i++];
             }
         }
 
