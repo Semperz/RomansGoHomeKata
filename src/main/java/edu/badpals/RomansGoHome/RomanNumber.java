@@ -16,7 +16,7 @@ public class RomanNumber {
     }
 
     public int toDecimal() {
-        int[] parsedData = parseRomanStringToInts(getAllMatchingGroups());
+        Integer[] parsedData = parseRomanStringToInts(getAllMatchingGroups());
         int total = 0;
         for (int i = 0; i < parsedData.length; ++i){
             if (i + 1 >= parsedData.length) {
@@ -37,11 +37,11 @@ public class RomanNumber {
         return romanNumber;
     }
 
-    private int[] parseRomanStringToInts(String romanString) {
-        return romanString.chars().mapToObj(c -> (char) c).mapToInt(numeral -> RomanNumbers.valueOf(Character.toString(numeral)).getDecimal()).toArray();
+    static Integer[] parseRomanStringToInts(String romanString) {
+        return romanString.chars().mapToObj(c -> (char) c).mapToInt(numeral -> RomanNumbers.valueOf(Character.toString(numeral)).getDecimal()).boxed().toArray(Integer[]::new);
     }
 
-    private String getAllMatchingGroups() {
+    String getAllMatchingGroups() {
         Matcher matcher = romanRegex.matcher(getRomanNumber());
         StringBuilder joinedGroups = new StringBuilder();
         while (matcher.find()) {

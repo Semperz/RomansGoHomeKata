@@ -6,10 +6,11 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.aggregator.AggregateWith;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 public class RomanNumberTest {
@@ -154,6 +155,17 @@ public class RomanNumberTest {
         testCase = "CDXXXIX"; // 439
         numeroRomano = new RomanNumber(testCase);
         assertEquals(439, numeroRomano.toDecimal());
+    }
+
+    @ParameterizedTest
+    @Tag("parseado")
+    @CsvSource({
+            "X,    10",
+            "IX,   1, 10",
+            "CM,   100, 1000"
+    })
+    public void parseRomanStringToIntsTest(String romanNumber, @AggregateWith(VarargsAggregator.class) Integer... expectedInts) {
+        assertArrayEquals(RomanNumber.parseRomanStringToInts(romanNumber), expectedInts);
     }
 
     /**
