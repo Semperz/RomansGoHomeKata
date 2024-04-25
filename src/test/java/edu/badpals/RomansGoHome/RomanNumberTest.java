@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.aggregator.AggregateWith;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -28,53 +27,32 @@ public class RomanNumberTest {
             "3000,  UMMMU"
     })
     @Tag("sumatorio")
-    public void grupo_M_test(int decimal, String roman) {
-
-        //String testCase = "M";
+    public void grupoMTest(int decimal, String roman) {
         numeroRomano = new RomanNumber(roman);
         assertEquals(decimal, numeroRomano.toDecimal());
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource({
+            "3300,  UMMMUCCCU",
+            "3030,  UMMMUXXXU",
+            "3003,  UMMMUIIIU"
+    })
     @Tag("sumatorio")
-    public void tres_repeticiones_C_test() {
-
-        String testCase = "UMMMUCCCU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(3300, numeroRomano.toDecimal());
+    public void tresRepeticionesTest(int decimalValue, String romanNumber) {
+        numeroRomano = new RomanNumber(romanNumber);
+        assertEquals(decimalValue, numeroRomano.toDecimal());
     }
 
-    @Test
+    @ParameterizedTest
+    @CsvSource({
+            "3503,  UMMMUDUIIIU",
+            "3403,  MMMUCDUIIIU",
+    })
     @Tag("sumatorio")
-    public void tres_repeticiones_X_test() {
-
-        String testCase = "UMMMUXXXU";
-        numeroRomano = new RomanNumber(testCase);
-
-        assertEquals(3030, numeroRomano.toDecimal());
-    }
-
-    @Test
-    @Tag("sumatorio")
-    public void tres_repeticiones_I_test() {
-
-        String testCase = "UMMMUIIIU";
-        numeroRomano = new RomanNumber(testCase);
-
-        assertEquals(3003, numeroRomano.toDecimal());
-    }
-
-    @Test
-    @Tag("sumatorio")
-    public void una_D_test() {
-
-        String testCase = "UMMMUDUIIIU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(3503, numeroRomano.toDecimal());
-
-        testCase = "MMMUCDUIIIU";
-        numeroRomano = new RomanNumber(testCase);
-       assertNotEquals(3503, numeroRomano.toDecimal());
+    public void dTest(int decimalValue, String romanNumber) {
+        numeroRomano = new RomanNumber(romanNumber);
+        assertEquals(decimalValue, numeroRomano.toDecimal());
     }
 
     /**
@@ -83,78 +61,30 @@ public class RomanNumberTest {
      * XL(40), XC(90),
      * CD(400), CM(900)
      */
-
-    @Test
+    @ParameterizedTest
+    @CsvSource({
+            "400,  UCDU",
+            "900,  UCMU",
+            "40,   UXLU",
+            "90,   UXCU",
+            "4,    UIVU",
+            "9,    UIXU",
+            "3888, MMMDCCCLXXXVIII",
+            "2777, MMDCCLXXVII",
+            "444,  CDXLIV",
+            "439,  CDXXXIX"
+    })
     @Tag("sustractivo")
-    public void grupo_C_DM_test() {
-
-        String testCase = "UCDU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(400, numeroRomano.toDecimal());
-
-        testCase = "UCMU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(900, numeroRomano.toDecimal());
+    public void sustractivoTest(int decimalValue, String romanNumber) {
+        numeroRomano = new RomanNumber(romanNumber);
+        assertEquals(decimalValue, numeroRomano.toDecimal());
     }
 
     @Test
-    @Tag("sustractivo")
-    public void grupo_X_LC_test() {
-
-        String testCase = "UXLU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(40, numeroRomano.toDecimal());
-
-        testCase = "UXCU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(90, numeroRomano.toDecimal());
-    }
-
-    @Test
-    @Tag("sustractivo")
-    public void grupo_I_VX_test() {
-
-        String testCase = "UIVU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(4, numeroRomano.toDecimal());
-
-        testCase = "UIXU";
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(9, numeroRomano.toDecimal());
-    }
-
-    @Test
-    @Tag("sustractivo")
-    public void grupos_sumatorios_tres_digitos_test() {
-        String testCase = "MMMDCCCLXXXVIII"; // 3888
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(3888, numeroRomano.toDecimal());
-    }
-    @Test
-    public void cadena_vacia_test() {
+    public void cadenaVaciaTest() {
         String testCase = "";
         numeroRomano = new RomanNumber(testCase);
         assertEquals(0, numeroRomano.toDecimal());
-    }
-
-    @Test
-    @Tag("sustractivo")
-    public void grupos_sumatorios_test() {
-        String testCase = "MMDCCLXXVII"; // 2777
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(2777, numeroRomano.toDecimal());
-    }
-
-    @Test
-    @Tag("sustractivo")
-    public void grupos_substractivos_test() {
-        String testCase = "CDXLIV"; // 444
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(444, numeroRomano.toDecimal());
-
-        testCase = "CDXXXIX"; // 439
-        numeroRomano = new RomanNumber(testCase);
-        assertEquals(439, numeroRomano.toDecimal());
     }
 
     @ParameterizedTest
@@ -179,7 +109,7 @@ public class RomanNumberTest {
             "4,   IV",
             "900, CM"
     })
-    public void valor_decimal_test(int decimal, String roman) {
+    public void valorDecimalTest(int decimal, String roman) {
         numeroRomano = new RomanNumber(roman);
         assertEquals(decimal, numeroRomano.toDecimal());
     }
